@@ -12,7 +12,12 @@ import React, {
 } from 'react-native';
 
 import ViewPager, {} from 'react-native-viewpager';
-const styles = require('../styles/styles.js');
+import BaseModules, {
+	Launch,
+	Detail,
+} from '../../utils/BaseModules';
+
+const styles = require('../../styles/styles.js');
 
 var IMGS = [
   {img:'https://images.unsplash.com/photo-1441742917377-57f78ee0e582?h=640',txt:'one',},
@@ -43,6 +48,7 @@ let localData2 = [
 ];
 
 class TopScreen extends Component{
+
     constructor(props){
         super(props);
         var dataSource = new ViewPager.DataSource({
@@ -84,7 +90,7 @@ class TopScreen extends Component{
 	
 	_onPressAlert(){
 		//Alert.alert('ts', '123');
-		this.props.navigator.push({initProps: {}, moduleName: 'Detail', pageIndex: '2', switchWay: 'FadeAndroid', component: (<Detail {...this.props} />),});
+		this.props.navigator.push({initProps: {}, moduleName: 'Detail', pageIndex: '0', switchWay: 'FadeAndroid', component: Detail});
 	}
 
 	render() {
@@ -105,7 +111,7 @@ class TopScreen extends Component{
 					}
 				</View>
 				<View style={styles.section2}>
-					<Image style={styles.fsqIcon} source={require('../imgs/lawcircle.png')} />
+					<Image style={styles.fsqIcon} source={require('../../imgs/lawcircle.png')} />
 					<View style={styles.txtScreen}>
 						<ViewPager
 							style={styles.txtScreen}
@@ -120,18 +126,18 @@ class TopScreen extends Component{
 				<View style={styles.section3}>
 					<View style={styles.section3Item}>
 						<TouchableOpacity>
-							<Image style={styles.section3Img} source={require('../imgs/logo.png')} />
+							<Image style={styles.section3Img} source={require('../../imgs/logo.png')} />
 						</TouchableOpacity>
 					</View>
 					<View style={styles.section3Item}>
 						<TouchableOpacity>
-							<Image style={styles.section3Img} source={require('../imgs/logo.png')} />
+							<Image style={styles.section3Img} source={require('../../imgs/logo.png')} />
 						</TouchableOpacity>
 					</View>
 				</View>
 				<View style={{backgroundColor: '#eee'}}>
 					<View style={{marginTop:6, flex:1, flexDirection: 'row', borderTopWidth: .5,borderTopColor: '#ddd',borderBottomWidth: .5,borderBottomColor: '#ddd', backgroundColor: '#fff', paddingTop: 3, paddingBottom: 3,}}>
-						<Image style={{height:16,width:16,marginTop:2,marginLeft:6,}} source={require('../imgs/homehot.png')} />
+						<Image style={{height:16,width:16,marginTop:2,marginLeft:6,}} source={require('../../imgs/homehot.png')} />
 						<Text style={{color: '#6796E4', fontSize: 14,marginLeft:6,marginRight:6,}}>热门咨询</Text>
 						<Text style={{color: '#666', fontSize: 10,marginTop:3,}}>老百姓最关心的法律问题</Text>
 					</View>
@@ -139,7 +145,7 @@ class TopScreen extends Component{
 				<View style={{backgroundColor: 'white', flex:1, flexDirection: 'row', flexWrap: 'wrap', }}>
 					{
 						localData2.map((k, v)=>(
-							<TouchableOpacity key={'key-'+v} style={{marginLeft:-1, height:60, width: (Dimensions.get('window').width)/2+1, paddingLeft: 10, paddingBottom: 10, borderBottomWidth: .5, borderBottomColor: '#ddd',borderLeftWidth: .5, borderLeftColor: '#ddd', }} onPress={this._onPressAlert}>
+							<TouchableOpacity key={'key-'+v} style={{marginLeft:-1, height:60, width: (Dimensions.get('window').width)/2+1, paddingLeft: 10, paddingBottom: 10, borderBottomWidth: .5, borderBottomColor: '#ddd',borderLeftWidth: .5, borderLeftColor: '#ddd', }} onPress={this._onPressAlert.bind(this)}>
 								<View style={{flex:1, flexDirection: 'row',}}>
 									<View style={{marginTop:6,width: 100,}}><Text style={{fontSize: 12, color: '#333',}}>{k.tit}</Text><Text numberOfLines={2} style={{marginTop:4,fontSize: 10,lineHeight:14, color: '#999',}}>{k.txt}</Text></View>
 									<Image style={{height:36,width:36,marginTop:11,marginLeft:6,}} source={{uri: k.img}} />

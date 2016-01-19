@@ -19,6 +19,11 @@ import BaseUtils, {
     BaseStyles,
 } from '../utils/BaseUtils';
 
+import BaseModules, {
+	Launch,
+	Detail,
+} from '../utils/BaseModules';
+
 let testData = [{"img": "../imgs/logo.png", "desc":"图片1"}, {"img": "../imgs/logo.png", "desc":"图片2"}, {"img": "../imgs/logo.png", "desc":"图片3"}, {"img": "../imgs/logo.png", "desc":"图片4"}, {"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},];
 let htData = [{'id': 'A1443436261391', 'type':'婚姻家庭', 'name': '离婚起诉书', 'time': '2015-09-28 20:11:33', 'index': 0},{'id': 'B1443436261391', 'type':'创业合同', 'name': '创业合同书', 'time': '2015-09-28 20:11:33', 'index': 1},{'id': 'A1443436261391', 'type':'婚姻家庭', 'name': '离婚起诉书', 'time': '2015-09-28 20:11:33', 'index': 2},{'id': 'B1443436261391', 'type':'创业合同', 'name': '创业合同书', 'time': '2015-09-28 20:11:33', 'index': 3},{'id': 'A1443436261391', 'type':'婚姻家庭', 'name': '离婚起诉书', 'time': '2015-09-28 20:11:33', 'index': 4},{'id': 'B1443436261391', 'type':'创业合同', 'name': '创业合同书', 'time': '2015-09-28 20:11:33', 'index': 5},];
 
@@ -51,9 +56,7 @@ var Login = React.createClass({
   },
   toViewCoutract: function(ccid: number){
     this.props.navigator.push({
-        name: 'home',
-        cid : ccid,
-        switchWay : 'FadeAndroid',
+       initProps: {}, moduleName: 'Launch', pageIndex: '0', switchWay: 'HorizontalSwipeJump', component: Launch
     });
   },
   _onEndReached: function(){

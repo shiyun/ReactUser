@@ -10,7 +10,7 @@ import BaseUtils, {
 } from '../utils/BaseUtils';
 
 import BaseModules, {
-    TopScreen,
+    Home,
 } from '../utils/BaseModules';
 
 class Launch extends React.Component{
@@ -26,18 +26,13 @@ class Launch extends React.Component{
 
     render(){
         let loading = this.state.loadStatus ? null : (<Image source={this.state.loading} style={BaseStyles.loading} />);
-		let topScreen = this.state.loadStatus ? 
-						(<TopScreen navigator={this.props.navigator} route={this.props.route} style={BaseStyles.pager} />) : 
-						(<View style={BaseStyles.launch}>
-							<Animated.Image  
-								 source={this.state.launchimg} 
-								 style={[BaseStyles.launchImg, {opacity: this.state.fadeAnim}]}>
-							</Animated.Image>
-							{loading}
-						</View>);
         return(
-			<View>
-				{topScreen}
+			<View {...this.props} style={BaseStyles.launch}>
+				<Animated.Image  
+					 source={this.state.launchimg} 
+					 style={[BaseStyles.launchImg, {opacity: this.state.fadeAnim}]}>
+				</Animated.Image>
+				{loading}
 			</View>
         );
     }
@@ -54,11 +49,16 @@ class Launch extends React.Component{
                        {toValue: 0, duration: 2000},   
                     ).start();
                     this.setState({loadStatus: true});
+					this._goIndex();
                 }, 1000);
             })
             .done();
         
     }
+
+	_goIndex(){
+		this.props.navigator.push({initProps: {}, moduleName: 'Home', pageIndex: '1', switchWay: 'FadeAndroid', component: Home});
+	}
 }
 
 module.exports = Launch;
