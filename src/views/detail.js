@@ -21,7 +21,7 @@ import BaseUtils, {
 
 import BaseModules, {
 	Launch,
-	Detail,
+	Home,
 } from '../utils/BaseModules';
 
 let testData = [{"img": "../imgs/logo.png", "desc":"图片1"}, {"img": "../imgs/logo.png", "desc":"图片2"}, {"img": "../imgs/logo.png", "desc":"图片3"}, {"img": "../imgs/logo.png", "desc":"图片4"}, {"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},{"img": "../imgs/logo.png", "desc":"图片1"},];
@@ -33,13 +33,14 @@ var Login = React.createClass({
     return {
         bounceValue: new Animated.Value(.8),
         dataSource: ds.cloneWithRows(htData),
+        switchWay: '',
     }
   },
   componentDidMount: function(){
     Animated.timing(
         this.state.bounceValue, {toValue: 1, duration: 1000}
     ).start();
-    //this.setState({dataSource: this.state.dataSource.cloneWithRows(testData)});
+    this.setState({switchWay: this.props.switchWay});
   },
   onPressLogin: function(){
     this.props.navigator.push({
@@ -55,8 +56,8 @@ var Login = React.createClass({
     });
   },
   toViewCoutract: function(ccid: number){
-    this.props.navigator.push({
-       initProps: {}, moduleName: 'Launch', pageIndex: '0', switchWay: 'HorizontalSwipeJump', component: Launch
+	this.props.navigator.push({
+       initProps: {}, moduleName: 'Home', pageIndex: '0', switchWay: 'FadeAndroid', component: Home
     });
   },
   _onEndReached: function(){
@@ -64,7 +65,7 @@ var Login = React.createClass({
   },
   renderRow: function(data){
     return (
-        <TouchableOpacity style={BaseStyles.imgWrap} index={data.index} onPress={()=>{this.toViewCoutract(data.index)}}>            
+        <TouchableOpacity style={BaseStyles.imgWrap} index={data.index} onPress={()=>this.toViewCoutract(data.index)}>            
             <View style={BaseStyles.hdid}><Text style={BaseStyles.listfont}>合同ID：</Text><Text style={BaseStyles.listfont}>{data.id}</Text><View style={BaseStyles.toDetail}></View></View>
             <View style={BaseStyles.hdtype}><Text style={BaseStyles.listfont}>合同分类：</Text><Text style={BaseStyles.hdtype2, BaseStyles.listfont, BaseStyles.listfont2}>{data.type}</Text></View>
             <View style={BaseStyles.hdtype}><Text style={BaseStyles.listfont}>合同名称：</Text><Text style={BaseStyles.hdtype2, BaseStyles.listfont, BaseStyles.listfont2}>{data.name}</Text></View>

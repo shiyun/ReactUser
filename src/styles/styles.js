@@ -15,10 +15,11 @@ const comStyle = {
 };
 
 const styles = StyleSheet.create({
-  containers: {
-      flex: 1,
-      justifyContent: 'center',
-      backgroundColor: '#F3F4F8',
+  container: {
+	  flex: 1,
+	  justifyContent: 'center',
+  },
+  launchWrap: {
   },
   loginWrap: {
       flex:1,
@@ -57,9 +58,6 @@ const styles = StyleSheet.create({
     right: 10,
     top: 5,
     transform: [{rotate: '135deg'}],
-  },
-    container: {
-      flex:1,
   },  
   inputWrap: {
     width: wWidth,
@@ -220,6 +218,107 @@ const styles = StyleSheet.create({
 	height:100,
 	width: 150,
 	borderRadius: 6,
+  },
+  headerWrap: {
+	backgroundColor: '#fff',
+    height: 30,
+    width: wWidth,
+  },
+  headerInner: {
+	flex: 1,
+	flexDirection: 'row',
+	alignItems: 'center',
+  },
+  leftBtnWrap: {
+    height: 30,
+	width: 40,	
+	justifyContent: 'center',
+	alignItems: 'center',
+  },
+  leftImg: {
+	height: 16,	
+	width: 16,
+	resizeMode: 'contain',
+  },
+  indexTitImg: {
+	height: 10.8*1.2,	
+	width: 48.8*1.2,
+	resizeMode: 'contain',
+	position: 'relative',
+	marginRight: -30,
+  },
+  RightImg: {
+	height: 16,	
+	width: 16,
+	resizeMode: 'contain',
+	justifyContent: 'flex-end',
+	alignItems: 'center',
+  },
+  indexTitWrap: {
+	flex: 1,	
+	justifyContent: 'center',
+	alignItems: 'center',
+  },
+  rightBtnWrap: {
+	height: 30,
+	width: 80,	
+	alignItems: 'center',
+	justifyContent: 'center',
+  },
+  h16: {
+	height: 16,
+	width: 80,	
+  },
+  huodong: {
+	height: 16,
+	width: 40,	
+	justifyContent: 'center',
+	alignItems: 'center',
+	borderRightWidth: .5,
+	borderRightColor: comStyle.borderColor,
+  },
+  flex1: {
+	flex: 1,
+	flexDirection: 'row',
+  },
+  center: {
+	alignItems: 'center',
+	justifyContent: 'center',
+  },
+  footer: {
+	backgroundColor: 'rgba(0,0,0,0)',
+	width: wWidth,
+	height: (wWidth/640) * 104,
+	alignItems: 'center',
+	justifyContent: 'center',
+  },
+  footerWrapImg: {
+	width: wWidth,
+	height: (wWidth/640) * 104,
+	position: 'absolute',
+	left: 0,
+	top: 0,
+  },
+  footerTxtWrap: {
+	width: 110,
+	height: 40,
+	backgroundColor: comStyle.bColor,
+	borderRadius: 20,
+	paddingLeft: 20,
+	paddingRight: 20,
+	alignItems: 'center',
+	justifyContent: 'center',
+  },
+  callIcon: {
+	height: 18,
+	width: 18,
+	marginRight: 6,
+  },
+  callTxt: {
+	textAlign: 'center',
+	color: '#fff',
+	position: 'relative',
+	top: -2,
   },
 });
 

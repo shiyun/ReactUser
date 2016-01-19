@@ -38,7 +38,6 @@ class Launch extends React.Component{
     }
     
     componentDidMount(){       
-         
         fetch('http://kdnr.alpha.pocketlawyer.cn/openarticle/1')
             .then(res=>res.json())
             .then(res=>{
