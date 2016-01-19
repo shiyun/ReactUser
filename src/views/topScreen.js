@@ -101,7 +101,7 @@ class TopScreen extends Component{
 				/>			
 				<View style={styles.lineStyleWrap}>
 					{
-						IMGS.map((v, i) => <View style={[styles.lineStyle, this.state.curLine == i ? styles.lineStyleCur : null]}></View> )
+						IMGS.map((v, i) => <View key={'key-'+i} style={[styles.lineStyle, this.state.curLine == i ? styles.lineStyleCur : null]}></View> )
 					}
 				</View>
 				<View style={styles.section2}>
@@ -139,7 +139,7 @@ class TopScreen extends Component{
 				<View style={{backgroundColor: 'white', flex:1, flexDirection: 'row', flexWrap: 'wrap', }}>
 					{
 						localData2.map((k, v)=>(
-							<TouchableOpacity style={{marginLeft:-1, height:60, width: (Dimensions.get('window').width)/2+1, paddingLeft: 10, paddingBottom: 10, borderBottomWidth: .5, borderBottomColor: '#ddd',borderLeftWidth: .5, borderLeftColor: '#ddd', }} onPress={this._onPressAlert}>
+							<TouchableOpacity key={'key-'+v} style={{marginLeft:-1, height:60, width: (Dimensions.get('window').width)/2+1, paddingLeft: 10, paddingBottom: 10, borderBottomWidth: .5, borderBottomColor: '#ddd',borderLeftWidth: .5, borderLeftColor: '#ddd', }} onPress={this._onPressAlert}>
 								<View style={{flex:1, flexDirection: 'row',}}>
 									<View style={{marginTop:6,width: 100,}}><Text style={{fontSize: 12, color: '#333',}}>{k.tit}</Text><Text numberOfLines={2} style={{marginTop:4,fontSize: 10,lineHeight:14, color: '#999',}}>{k.txt}</Text></View>
 									<Image style={{height:36,width:36,marginTop:11,marginLeft:6,}} source={{uri: k.img}} />
