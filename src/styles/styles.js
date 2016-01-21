@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
   },
   footerTxtWrap: {
 	width: 110,
-	height: 40,
+	height: 36,
 	backgroundColor: comStyle.bColor,
 	borderRadius: 20,
 	paddingLeft: 20,

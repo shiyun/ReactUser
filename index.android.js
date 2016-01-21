@@ -15,6 +15,8 @@ import BaseUtils, {
 
 import BaseModules, {
 	Launch,
+	Home,
+	HomeCont,
 	Detail,
 } from './src/utils/BaseModules';
 
@@ -33,56 +35,25 @@ class ReactUser extends Component {
 
 	constructor(props){
 		super(props);
-		this.initProps = {};
-		this.moduleName = 'Launch';
-		this.pageIndex = '0';
-		this.switchWay = 'FadeAndroid';
-		this.component = (<Launch {...this.props} />); 
 	}
 
 	render(){
-        let initialRoute = {initProps: {}, moduleName: 'Launch', pageIndex: '0', switchWay: 'FadeAndroid', component: (<Launch {...this.props} />),};
-
+        let initialRoute = {initProps: {}, moduleName: 'HomeCont', pageIndex: '0', switchWay: 'HorizontalSwipeJump', component: HomeCont};
+		
 		return (
 			<Navigator
                 style = {BaseStyles.container}
                 initialRoute = {initialRoute}
-                renderScene={this._renderSceneAndroid}
                 configureScene={this._configureSceneAndroid}
+                renderScene={(route, navigator)=>{
+					let Component = route.component;
+					_navigator = navigator;
+					if (Component){
+						return <Component {...route.params} navigator={_navigator} />
+					}
+				}}
              />
 		);
-	}
-
-	_renderSceneAndroid(route, navigationOperations, onComponentRef){
-        _navigator = navigationOperations;
-		switch (route.name)
-        {            
-            case 'screen':
-                return (
-					<View style={{flex:1}}>
-						<ListView style={BaseStyles.launchWrap} navigator={_navigator} route={route} dataSource={this.state.dataSource} renderRow={this._renderRow} />                        						
-					</View>
-                );
-                break;
-            case 'screen2':
-                return (
-					<TopScreen navigator={_navigator} route={route} style={BaseStyles.pager} />
-                );
-                break;
-            case 'login':
-               console.log(route.routerIndex);
-                return (<Login navigator={_navigator} route={route} />);
-                break;
-            case 'home':
-               return (<Home navigator={_navigator} route={route} />);
-               break;
-            case 'launch':
-               return (<Launch navigator={_navigator} route={route} style={BaseStyles.launch} />);
-               break;
-            case 'thumb':
-               return (<Apps navigator={_navigator} route={route} />);
-               break;
-         } 
 	}
 
 	_configureSceneAndroid(route){
