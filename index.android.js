@@ -38,7 +38,7 @@ class ReactUser extends Component {
 	}
 
 	render(){
-        let initialRoute = {initProps: {}, moduleName: 'HomeCont', pageIndex: '0', switchWay: 'HorizontalSwipeJump', component: HomeCont};
+        let initialRoute = {initProps: {}, moduleName: 'Launch', pageIndex: '0', switchWay: 'HorizontalSwipeJump', component: Launch};
 		
 		return (
 			<Navigator
