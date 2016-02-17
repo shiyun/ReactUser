@@ -119,7 +119,8 @@ const styles = StyleSheet.create({
 	fcolumn: {
 		flexDirection: 'column',
 	},
-	overLayer: {backgroundColor: 'rgba(0,0,0,.8)', position: 'absolute', left: 0, top: 0, right: 0, bottom: 0,},
+	overLayer: {backgroundColor: 'rgba(0,0,0,.7)', position: 'absolute', left: 0, top: 0, right: 0, bottom: 0,},
+	noBorder: {borderTopWidth: 0,borderBottomWidth: 0,borderLeftWidth: 0,borderRightWidth: 0,},
 	
 	//loginWrap
 	loginWrap: {
@@ -231,6 +232,8 @@ const styles = StyleSheet.create({
 		bottom: 0,
 		right: 0,
 	},
+	noLeftImg: {position: 'relative', top: -20},
+	noLeftImg2: {width: wWidth/2, height: wWidth/4, right: -10 },
 	btop: {
 		borderTopWidth: .5,
 		borderTopColor: cStyle.borderColor,
@@ -344,6 +347,8 @@ const styles = StyleSheet.create({
 		
 	},
 	scoreDateWrap: {paddingTop: 10, paddingBottom: 10,},
+	webView: {backgroundColor: '#fff', height: wHeight},
+
 });
 
 module.exports = styles;

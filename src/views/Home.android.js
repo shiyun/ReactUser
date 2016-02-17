@@ -11,14 +11,18 @@ import React, {
 } from 'react-native';
 
 import BaseModules, {
+	Login,
 	ChangeList,
 	Detail,
 	Category,
 	GetScoreList,
+	WebViewCont,
 } from '../utils/BaseModules';
 
 import BaseUtils, {
     BaseStyles,
+	wWidth,
+	wHeight,
 } from '../utils/BaseUtils';
 
 import ViewPager, {} from 'react-native-viewpager';
@@ -37,6 +41,7 @@ const locData = {
 	categoryDraw: require('../images/category_draw.png'),
 	categoryNew: require('../images/category_new.png'),
 	categoryBmfw: require('../images/bianlishenghuo.png'),
+	defaultpro: require('../images/defaultpro.png'),
 }
 
 class Home extends Component{
@@ -52,10 +57,118 @@ class Home extends Component{
 			productCategories: [],			
 			integral: 0,
 			columns: [],
+			popularProducts: [{id: 'no', picUrl: locData.defaultpro, title: '',subTitle: ''},{id: 'no', picUrl: locData.defaultpro, title: '',subTitle: ''},{id: 'no', picUrl: locData.defaultpro, title: '',subTitle: ''},],
 		}
     }    
-	   
-	render() {		
+	
+	render() {
+		let hotpro;
+		if (this.state.popularProducts[0].id == 'no'){
+			hotpro = (
+				<View style={[BaseStyles.sectionCont,BaseStyles.flex1,BaseStyles.frow,BaseStyles.mt6,]}>
+					{
+					<View style={[BaseStyles.sectionContent, BaseStyles.flex1,]}>
+						<Text style={[BaseStyles.c9,BaseStyles.f10,BaseStyles.line14,BaseStyles.mt3,]}>{this.state.popularProducts[0].title}</Text>
+						<Text style={[BaseStyles.c6,BaseStyles.f12,BaseStyles.line14,]}>{this.state.popularProducts[0].subTitle}</Text>
+						<View style={[BaseStyles.frow,BaseStyles.vCenter,]}>
+							<Text style={[BaseStyles.aColor,]}>{this.state.popularProducts[0].score} </Text>	
+							<Image source={locData.iconCoin} style={[BaseStyles.iconCoin, {height: 12, width: 12,}]} />	
+						</View>
+						<Image source={this.state.popularProducts[0].picUrl} style={[BaseStyles.leftImg,BaseStyles.mb6, BaseStyles.noLeftImg ]} />
+					</View>
+					}
+
+					<View style={[BaseStyles.sectionContent, BaseStyles.flex1, BaseStyles.fcolumn, BaseStyles.p0, ]}>
+					{
+						<View style={[BaseStyles.flex1,BaseStyles.btop,]}>
+							<View style={[BaseStyles.m6,BaseStyles.flex1,BaseStyles.frow, ]}>
+								<View style={[BaseStyles.flex1,  ]}>
+									<Text style={[BaseStyles.c9,BaseStyles.f10,BaseStyles.line14,BaseStyles.mt3,]}>{this.state.popularProducts[1].title}</Text>
+									<Text style={[BaseStyles.c6,BaseStyles.f12,BaseStyles.line14,]}>{this.state.popularProducts[1].subTitle}</Text>
+									<View style={[BaseStyles.frow,BaseStyles.vCenter,]}>
+										<Text style={[BaseStyles.aColor,]}>{this.state.popularProducts[1].score} </Text>	
+										<Image source={locData.iconCoin} style={[BaseStyles.iconCoin, {height: 12, width: 12,}]} />	
+									</View>
+								</View>
+								<Image source={this.state.popularProducts[1].picUrl} style={[BaseStyles.leftImg2, BaseStyles.mb6, BaseStyles.noLeftImg2]} />
+							</View>
+						</View>			
+					}
+					{
+						<View style={[BaseStyles.flex1,BaseStyles.btop,]}>							
+							<View style={[BaseStyles.m6,BaseStyles.flex1,BaseStyles.frow, ]}>
+								<View style={[BaseStyles.flex1,  ]}>
+									<Text style={[BaseStyles.c9,BaseStyles.f10,BaseStyles.line14,BaseStyles.mt3,]}>{this.state.popularProducts[2].title}</Text>
+									<Text style={[BaseStyles.c6,BaseStyles.f12,BaseStyles.line14,]}>{this.state.popularProducts[2].subTitle}</Text>
+									<View style={[BaseStyles.frow,BaseStyles.vCenter,]}>
+										<Text style={[BaseStyles.aColor,]}>{this.state.popularProducts[2].score} </Text>	
+										<Image source={locData.iconCoin} style={[BaseStyles.iconCoin, {height: 12, width: 12,}]} />	
+									</View>
+								</View>
+								<Image source={this.state.popularProducts[2].picUrl} style={[BaseStyles.leftImg2, BaseStyles.mb6, BaseStyles.noLeftImg2,]} />
+							</View>
+						</View>	
+					}
+					</View>
+				</View>		
+			);
+		}else{
+			hotpro = (
+				<View style={[BaseStyles.sectionCont,BaseStyles.flex1,BaseStyles.frow,BaseStyles.mt6,]}>
+					{
+					<View style={[BaseStyles.sectionContent, BaseStyles.flex1,]}>
+						<TouchableOpacity style={[BaseStyles.flex1 ]} onPress={this._goDetail.bind(this,this.state.popularProducts[0].id)}>
+							<Text style={[BaseStyles.c9,BaseStyles.f10,BaseStyles.line14,BaseStyles.mt3,]}>{this.state.popularProducts[0].title}</Text>
+							<Text style={[BaseStyles.c6,BaseStyles.f12,BaseStyles.line14,]}>{this.state.popularProducts[0].subTitle}</Text>
+							<View style={[BaseStyles.frow,BaseStyles.vCenter,]}>
+								<Text style={[BaseStyles.aColor,]}>{this.state.popularProducts[0].score} </Text>	
+								<Image source={locData.iconCoin} style={[BaseStyles.iconCoin, {height: 12, width: 12,}]} />	
+							</View>
+							<Image source={{uri: this.state.popularProducts[0].picUrl}} style={[BaseStyles.leftImg,BaseStyles.mb6]} />
+						</TouchableOpacity>
+					</View>
+					}
+
+					<View style={[BaseStyles.sectionContent, BaseStyles.flex1, BaseStyles.fcolumn, BaseStyles.p0, ]}>
+					{
+						<View style={[BaseStyles.flex1,BaseStyles.btop,]}>
+							<TouchableOpacity style={[BaseStyles.flex1 ]} onPress={this._goDetail.bind(this,this.state.popularProducts[1].id)}>
+								<View style={[BaseStyles.m6,BaseStyles.flex1,BaseStyles.frow, ]}>
+									<View style={[BaseStyles.flex1,  ]}>
+										<Text style={[BaseStyles.c9,BaseStyles.f10,BaseStyles.line14,BaseStyles.mt3,]}>{this.state.popularProducts[1].title}</Text>
+										<Text style={[BaseStyles.c6,BaseStyles.f12,BaseStyles.line14,]}>{this.state.popularProducts[1].subTitle}</Text>
+										<View style={[BaseStyles.frow,BaseStyles.vCenter,]}>
+											<Text style={[BaseStyles.aColor,]}>{this.state.popularProducts[1].score} </Text>	
+											<Image source={locData.iconCoin} style={[BaseStyles.iconCoin, {height: 12, width: 12,}]} />	
+										</View>
+									</View>
+									<Image source={{uri: this.state.popularProducts[1].picUrl}} style={[BaseStyles.leftImg2, BaseStyles.mb6, ]} />
+								</View>
+							</TouchableOpacity>
+						</View>			
+					}
+					{
+						<View style={[BaseStyles.flex1,BaseStyles.btop,]}>
+							<TouchableOpacity style={[BaseStyles.flex1 ]} onPress={this._goDetail.bind(this,this.state.popularProducts[2].id)}>
+								<View style={[BaseStyles.m6,BaseStyles.flex1,BaseStyles.frow, ]}>
+									<View style={[BaseStyles.flex1,  ]}>
+										<Text style={[BaseStyles.c9,BaseStyles.f10,BaseStyles.line14,BaseStyles.mt3,]}>{this.state.popularProducts[2].title}</Text>
+										<Text style={[BaseStyles.c6,BaseStyles.f12,BaseStyles.line14,]}>{this.state.popularProducts[2].subTitle}</Text>
+										<View style={[BaseStyles.frow,BaseStyles.vCenter,]}>
+											<Text style={[BaseStyles.aColor,]}>{this.state.popularProducts[2].score} </Text>	
+											<Image source={locData.iconCoin} style={[BaseStyles.iconCoin, {height: 12, width: 12,}]} />	
+										</View>
+									</View>
+									<Image source={{uri: this.state.popularProducts[2].picUrl}} style={[BaseStyles.leftImg2, BaseStyles.mb6, ]} />
+								</View>
+							</TouchableOpacity>
+						</View>	
+					}
+					</View>
+				</View>		
+			);
+		}
+
         return (
 			<ScrollView
 			automaticallyAdjustContentInsets={false}
@@ -64,7 +177,7 @@ class Home extends Component{
 				<ViewPager
 						style={BaseStyles.loginWrap}
 						dataSource={this.state.viewPage}
-						renderPage={this._renderPage}
+						renderPage={this._renderPage.bind(this)}
 						isLoop={true}
 						autoPlay={true}												
 					/>	
@@ -88,47 +201,8 @@ class Home extends Component{
 					<View style={[BaseStyles.titLine,BaseStyles.wWidth]}></View>
 					<Text style={[BaseStyles.hTit, BaseStyles.c6, BaseStyles.f14,]}>热门商品</Text>
 				</View>
-				
-				<View style={[BaseStyles.sectionCont,BaseStyles.flex1,BaseStyles.frow,BaseStyles.mt6,]}>
-					<View style={[BaseStyles.sectionContent, BaseStyles.flex1,]}>
-						<Text style={[BaseStyles.c9,BaseStyles.f10,BaseStyles.line14,BaseStyles.mt3,]}>给你一份冬季的守候</Text>
-						<Text style={[BaseStyles.c6,BaseStyles.f12,BaseStyles.line14,]}>一号专车5元优惠券</Text>
-						<View style={[BaseStyles.frow,BaseStyles.vCenter,]}>
-							<Text style={[BaseStyles.aColor,]}>0 </Text>	
-							<Image source={locData.iconCoin} style={[BaseStyles.iconCoin, {height: 12, width: 12,}]} />	
-						</View>
-						<Image source={{uri: 'http://release-fbimages.oss.aliyuncs.com/lawyercard/2015/12/21/D5EFC142186F9F00343CDDBE082E231F.png'}} style={[BaseStyles.leftImg,BaseStyles.mb6]} />
-					</View>
-					<View style={[BaseStyles.sectionContent, BaseStyles.flex1, BaseStyles.fcolumn, BaseStyles.p0, ]}>
-						<View style={[BaseStyles.flex1,BaseStyles.btop,]}>
-							<View style={[BaseStyles.m6,BaseStyles.flex1,BaseStyles.frow, ]}>
-								<View style={[BaseStyles.flex1,  ]}>
-									<Text style={[BaseStyles.c9,BaseStyles.f10,BaseStyles.line14,BaseStyles.mt3,]}>给你一份冬季的守候</Text>
-									<Text style={[BaseStyles.c6,BaseStyles.f12,BaseStyles.line14,]}>一号专车5元优惠券</Text>
-									<View style={[BaseStyles.frow,BaseStyles.vCenter,]}>
-										<Text style={[BaseStyles.aColor,]}>0 </Text>	
-										<Image source={locData.iconCoin} style={[BaseStyles.iconCoin, {height: 12, width: 12,}]} />	
-									</View>
-								</View>
-								<Image source={{uri: 'http://release-fbimages.oss.aliyuncs.com/lawyercard/2015/12/30/B85442A84D2F6802C48A1B4218776FB9.png'}} style={[BaseStyles.leftImg2, BaseStyles.mb6, ]} />
-							</View>
-						</View>						
-
-						<View style={[BaseStyles.flex1,BaseStyles.btop,]}>
-							<View style={[BaseStyles.m6,BaseStyles.flex1,BaseStyles.frow, ]}>
-								<View style={[BaseStyles.flex1,  ]}>
-									<Text style={[BaseStyles.c9,BaseStyles.f10,BaseStyles.line14,BaseStyles.mt3,]}>给你一份冬季的守候</Text>
-									<Text style={[BaseStyles.c6,BaseStyles.f12,BaseStyles.line14,]}>一号专车5元优惠券</Text>
-									<View style={[BaseStyles.frow,BaseStyles.vCenter,]}>
-										<Text style={[BaseStyles.aColor,]}>0 </Text>	
-										<Image source={locData.iconCoin} style={[BaseStyles.iconCoin, {height: 12, width: 12,}]} />	
-									</View>
-								</View>
-								<Image source={{uri: 'http://release-fbimages.oss.aliyuncs.com/lawyercard/2015/12/30/B85442A84D2F6802C48A1B4218776FB9.png'}} style={[BaseStyles.leftImg2, BaseStyles.mb6, ]} />
-							</View>
-						</View>						
-					</View>
-				</View>
+					
+				{hotpro}
 				
 				<View style={[BaseStyles.flex1, BaseStyles.sectionService, BaseStyles.frow, BaseStyles.mt6, BaseStyles.mb6,]}>
 					{
@@ -186,34 +260,48 @@ class Home extends Component{
 				//Alert.alert('dds', JSON.stringify(res));
 			http.get(url, 'post', data, (ress)=>{
 				const result = ress.result;	
-				
 				this.setState({
 					viewPage: this.ds.cloneWithPages(result.carouselPic),
 					productCategories: result.productCategories,
 					integral: result.integral,
 					columns: result.columns,
 				});
-				//Alert.alert('ddc', JSON.stringify(ress));
-				//this.props.navigator.push({initProps: {}, moduleName: 'Home', switchWay: 'FadeAndroid', component: Home});
+				if (result.popularProducts.length != 0){				
+					this.setState({
+						popularProducts: result.popularProducts,
+					});
+				}
+				//Alert.alert('ds',JSON.stringify(this.state.popularProducts));
 			});
-		},err => {Alert.alert('cc', err)});					
+		},err => {Alert.alert('提示', '请求错误，请重新登录！');this.props.navigator.push({initProps: {}, moduleName: 'Login', switchWay: 'FadeAndroid', component: Login});});					
 	}
-
+	
 	_renderPage(
         data: Object,
         pageID: number | string,) {
         return (
+			<TouchableOpacity onPress={this._bannerClick.bind(this,data)}>
               <Image
                 source={{uri: data.picUrl}}
-                style={[BaseStyles.pageImg, BaseStyles.wWidth]} />
+                style={[BaseStyles.pageImg, BaseStyles.wWidth]}				
+			  />
+			</TouchableOpacity>
         );
-    } 
+    }
+
+	_bannerClick(data){
+		if (data.linkType == '0'){
+			this.props.navigator.push({initProps: {pid: data.id}, moduleName: 'Detail', switchWay: 'FadeAndroid', component: Detail});
+		}else if(data.linkType == '1'){
+			this.props.navigator.push({initProps: {url: data.link}, moduleName: 'WebView', switchWay: 'FadeAndroid', component: WebViewCont});
+		}		
+	}
 	
 	_goChangeList(){
 		this.props.navigator.push({initProps: {}, moduleName: 'ChangeList', switchWay: 'FadeAndroid', component: ChangeList});
 	}
 
-	_goDetail(id: number){
+	_goDetail(id){
 		this.props.navigator.push({initProps: {pid: id}, moduleName: 'Detail', switchWay: 'FadeAndroid', component: Detail});
 	}
 
@@ -229,65 +317,3 @@ class Home extends Component{
 
 
 module.exports = Home;
-
-/*
-				<View style={[BaseStyles.sectionTit,BaseStyles.flex1,BaseStyles.vCenter,BaseStyles.mt14,]}>
-					<View style={[BaseStyles.titLine,BaseStyles.wWidth]}></View>
-					<Text style={[BaseStyles.hTit, BaseStyles.c6, BaseStyles.f14,]}>精品推荐</Text>
-				</View>
-				
-				<View style={[BaseStyles.bgWhite, BaseStyles.proWrap, BaseStyles.frow, BaseStyles.mt6]}>
-					<TouchableOpacity style={[BaseStyles.proCell,]} activeOpacity={.5} onPress={this._goDetail.bind(this)}>
-						<View style={[BaseStyles.m6,BaseStyles.flex1,]}>
-							<View style={[BaseStyles.flex1,  ]}>
-								<Text style={[BaseStyles.c9,BaseStyles.f10,BaseStyles.line14,BaseStyles.mt3,]}>给你一份冬季的守候</Text>
-								<Text style={[BaseStyles.c6,BaseStyles.f12,BaseStyles.line14,]}>一号专车5元优惠券</Text>
-								<View style={[BaseStyles.frow,BaseStyles.vCenter,]}>
-									<Text style={[BaseStyles.aColor,]}>0 </Text>	
-									<Image source={locData.iconCoin} style={[BaseStyles.iconCoin, {height: 12, width: 12,}]} />	
-								</View>
-							</View>
-							<Image source={{uri: 'http://release-fbimages.oss.aliyuncs.com/lawyercard/2015/12/30/B85442A84D2F6802C48A1B4218776FB9.png'}} style={[BaseStyles.proImg, BaseStyles.mb6, BaseStyles.mt6,]} />
-						</View>
-					</TouchableOpacity>
-					<TouchableOpacity style={[BaseStyles.proCell,]} activeOpacity={.5} onPress={this._goDetail.bind(this)}>
-						<View style={[BaseStyles.m6,BaseStyles.flex1,]}>
-							<View style={[BaseStyles.flex1,  ]}>
-								<Text style={[BaseStyles.c9,BaseStyles.f10,BaseStyles.line14,BaseStyles.mt3,]}>给你一份冬季的守候</Text>
-								<Text style={[BaseStyles.c6,BaseStyles.f12,BaseStyles.line14,]}>一号专车5元优惠券</Text>
-								<View style={[BaseStyles.frow,BaseStyles.vCenter,]}>
-									<Text style={[BaseStyles.aColor,]}>0 </Text>	
-									<Image source={locData.iconCoin} style={[BaseStyles.iconCoin, {height: 12, width: 12,}]} />	
-								</View>
-							</View>
-							<Image source={{uri: 'http://release-fbimages.oss.aliyuncs.com/lawyercard/2015/12/30/B85442A84D2F6802C48A1B4218776FB9.png'}} style={[BaseStyles.proImg, BaseStyles.mb6, BaseStyles.mt6,]} />
-						</View>
-					</TouchableOpacity>
-					<TouchableOpacity style={[BaseStyles.proCell,]} activeOpacity={.5} onPress={this._goDetail.bind(this)}>
-						<View style={[BaseStyles.m6,BaseStyles.flex1,]}>
-							<View style={[BaseStyles.flex1,  ]}>
-								<Text style={[BaseStyles.c9,BaseStyles.f10,BaseStyles.line14,BaseStyles.mt3,]}>给你一份冬季的守候</Text>
-								<Text style={[BaseStyles.c6,BaseStyles.f12,BaseStyles.line14,]}>一号专车5元优惠券</Text>
-								<View style={[BaseStyles.frow,BaseStyles.vCenter,]}>
-									<Text style={[BaseStyles.aColor,]}>0 </Text>	
-									<Image source={locData.iconCoin} style={[BaseStyles.iconCoin, {height: 12, width: 12,}]} />	
-								</View>
-							</View>
-							<Image source={{uri: 'http://release-fbimages.oss.aliyuncs.com/lawyercard/2015/12/30/B85442A84D2F6802C48A1B4218776FB9.png'}} style={[BaseStyles.proImg, BaseStyles.mb6, BaseStyles.mt6,]} />
-						</View>
-					</TouchableOpacity>
-					<TouchableOpacity style={[BaseStyles.proCell,]} activeOpacity={.5} onPress={this._goDetail.bind(this)}>
-						<View style={[BaseStyles.m6,BaseStyles.flex1,]}>
-							<View style={[BaseStyles.flex1,  ]}>
-								<Text style={[BaseStyles.c9,BaseStyles.f10,BaseStyles.line14,BaseStyles.mt3,]}>给你一份冬季的守候</Text>
-								<Text style={[BaseStyles.c6,BaseStyles.f12,BaseStyles.line14,]}>一号专车5元优惠券</Text>
-								<View style={[BaseStyles.frow,BaseStyles.vCenter,]}>
-									<Text style={[BaseStyles.aColor,]}>0 </Text>	
-									<Image source={locData.iconCoin} style={[BaseStyles.iconCoin, {height: 12, width: 12,}]} />	
-								</View>
-							</View>
-							<Image source={{uri: 'http://release-fbimages.oss.aliyuncs.com/lawyercard/2015/12/30/B85442A84D2F6802C48A1B4218776FB9.png'}} style={[BaseStyles.proImg, BaseStyles.mb6, BaseStyles.mt6,]} />
-						</View>
-					</TouchableOpacity>
-				</View>
-*/

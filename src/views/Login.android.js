@@ -21,22 +21,25 @@ import TimerMixin from 'react-timer-mixin';
 import HttpService from '../utils/service';
 const http = new HttpService();
 
-const Login = React.createClass({
-	
-	mixins: [TimerMixin], 
-	
-	getInitialState: function(){
-		return {
+class Login extends Component {
+	constructor(props){
+		super(props);
+
+		this.state = {
 			phone: 1,
 			verifyCode: 1,
 			sec: 10,
 			isClick: false,
 		}
-	},
+		
+		this.setInterval = TimerMixin.setInterval;
+		this.clearInterval = TimerMixin.clearInterval;
+		this.componentWillUnmount = TimerMixin.componentWillUnmount.bind(this);
+	}
 
-	render: function(){
+	render(){
 		let btn = this.state.isClick == false ? (	<View style={[BaseStyles.btnGetCodeWrap]}>
-												<TouchableOpacity style={[BaseStyles.flex1,BaseStyles.vCenter, BaseStyles.hCenter,]} onPress={this._getsmscode}>
+												<TouchableOpacity style={[BaseStyles.flex1,BaseStyles.vCenter, BaseStyles.hCenter,]} onPress={this._getsmscode.bind(this)}>
 													<Text style={[BaseStyles.btnGetCode]} ref="btn">获取验证码</Text>
 												</TouchableOpacity>						
 											</View>
@@ -68,7 +71,7 @@ const Login = React.createClass({
 					</View>			
 					<View style={[BaseStyles.inpWrap]}>
 						<View style={[BaseStyles.btnBeginUseWrap,BaseStyles.flex1]}>
-							<TouchableOpacity style={[BaseStyles.flex1,BaseStyles.vCenter, BaseStyles.hCenter,]} onPress={this._btnSubmit}>
+							<TouchableOpacity style={[BaseStyles.flex1,BaseStyles.vCenter, BaseStyles.hCenter,]} onPress={this._btnSubmit.bind(this)}>
 								<Text style={[BaseStyles.btnGetCode]}>开始使用</Text>
 							</TouchableOpacity>	
 						</View>
@@ -76,9 +79,9 @@ const Login = React.createClass({
 				</View>			
 			</View>
 		)
-	},
+	}
 	
-	_getsmscode: function(){
+	_getsmscode(){
 		let url = http.baseUrl + 'getsmscode?json=1';
 		let data = {phone:  this.state.phone, type: 1};
 		let time;
@@ -97,9 +100,9 @@ const Login = React.createClass({
 		}else{
 			Alert.alert('提示', '您填写的手机号码不正确！', [{text: '确定'}]);
 		}
-	},
+	}
 	
-	_btnSubmit: function(){
+	_btnSubmit(){
 		let url = http.baseUrl + 'login?json=1';
 		let data = {verifyCode: this.state.verifyCode, userName:  this.state.phone, loginType: 1};
 		if (!(/^1\d{10}$/.test(this.state.phone))){
@@ -120,7 +123,7 @@ const Login = React.createClass({
 				this.props.navigator.push({initProps: {userInfo: res.userInfo}, moduleName: 'Home', switchWay: 'FadeAndroid', component: Home});
 			});
 		}
-	},
-});
+	}
+}
 
 module.exports = Login;

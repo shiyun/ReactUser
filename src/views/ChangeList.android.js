@@ -28,10 +28,10 @@ class ChangeList extends Component{
     constructor(props){
         super(props); 
 		
-		let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+		this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 				
 		this.state = {
-			dataSource: ds.cloneWithRows(Array.from({length:20})),
+			dataSource: this.ds.cloneWithRows([{exchangeDate: '', picUrl: '', score: '', status: '', subTitle: '', ticketNo: '', title: ''}, {exchangeDate: '', picUrl: '', score: '', status: '', subTitle: '', ticketNo: '', title: ''}]),
 		}
     }    
 	   
@@ -39,22 +39,22 @@ class ChangeList extends Component{
         return (
 			<ListView
 				dataSource={this.state.dataSource}
-				renderRow={rowData=>(
+				renderRow={data=>(
 					<View style={[BaseStyles.listLi, BaseStyles.bgWhite, BaseStyles.frow, BaseStyles.p6]}>
-						<Image source={{uri: 'http://fbimages.oss.aliyuncs.com/lawyercard/2015/12/01/F1E4B65BF051710D865E80CBBE0E4616.png'}} 
+						<Image source={{uri: data.picUrl}} 
 						   style={[BaseStyles.listImg,]} />
 					    <View style={[BaseStyles.rListCont, BaseStyles.ml10]}>
-							<Text style={[BaseStyles.c6,BaseStyles.f12]}>一号专车优惠券</Text>
+							<Text style={[BaseStyles.c6,BaseStyles.f12]}>{data.title}</Text>
 							<View style={[BaseStyles.mt6, BaseStyles.flex1, BaseStyles.frow, BaseStyles.dhInfo]}>
-								<Text style={[BaseStyles.c6,BaseStyles.f12, ]}>兑换码：yhzc124324234326</Text>
+								<Text style={[BaseStyles.c6,BaseStyles.f12, ]}>兑换码：{data.ticketNo}</Text>
 								<View style={[BaseStyles.frow,BaseStyles.vCenter,]}>
-									<Text style={[BaseStyles.aColor, BaseStyles.f12]}>500 </Text>	
+									<Text style={[BaseStyles.aColor, BaseStyles.f12]}>{data.score} </Text>	
 									<Image source={locData.iconCoin} style={[BaseStyles.iconCoin, {height: 10, width: 10,}]} />	
 								</View>
 						    </View>
 							<View style={[BaseStyles.mt10, BaseStyles.frow, BaseStyles.vCenter,]}>
-								<Text style={[BaseStyles.aColor, BaseStyles.f12]}>兑换成功　　</Text>
-								<Text style={[BaseStyles.c9, BaseStyles.f10]}>2016年01月27日</Text>
+								<Text style={[BaseStyles.aColor, BaseStyles.f12]}>{data.status}　　</Text>
+								<Text style={[BaseStyles.c9, BaseStyles.f10]}>{data.exchangeDate}</Text>
 						    </View>
 					    </View>
 					</View>
@@ -64,16 +64,14 @@ class ChangeList extends Component{
     }
 	
 	componentWillMount(){
-		let url = http.baseUrl + 'mall/changeList?pageNow=1&pageSize=10';
+		let url = http.baseUrl + 'mall/changeList?json=1&pageNow=1&pageSize=10';
 		global.storage.load({
 			key: 'userInfo',			
 		}).then(res => {
-			//Alert.alert('dd',JSON.stringify(res))	
-			//let data = {accessToken: res.accessToken};		
-			//http.get(url, 'post', data, (ress)=>{
-			//	Alert.alert('dd', JSON.stringify(ress));
-				//this.props.navigator.push({initProps: {}, moduleName: 'Home', switchWay: 'FadeAndroid', component: Home});
-			//});
+			let data = {pageNow: 1, pageSize: 10};		
+			http.get(url, 'post', data, (ress)=>{
+				this.setState({dataSource: this.ds.cloneWithRows(ress.result)});
+			},err=>{Alert.alert('提示', '请求错误！', [{text: '确定'}])});
 		});					
 	}
 }
