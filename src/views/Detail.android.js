@@ -50,6 +50,7 @@ class Detail extends Component{
 			sureLayerFadeIn: false,
 			overLayerHeight: wHeight,
 			message: '',
+			scrollEnabled: true,
 		}
     }    
 	   
@@ -70,6 +71,7 @@ class Detail extends Component{
 			automaticallyAdjustContentInsets={false}
 			horizontal={false}
 			style={[BaseStyles.bgWhite, BaseStyles.wHeight]}
+			scrollEnabled={this.state.scrollEnabled}
 			ref='scrollViewDetail'
 			>
 				<ViewPager
@@ -155,7 +157,8 @@ class Detail extends Component{
 			friction: 6,                  
 			tension: 100,                  
 		  }
-		).start();  		  
+		).start();  		
+		this.setState({scrollEnabled: false}); 
 	}
 
 	_changeSure(){
@@ -169,7 +172,7 @@ class Detail extends Component{
 			this.setState({sureLayerFadeIn: true, message: res.result.message}); 
 			
 			this.setTimeout(()=>{
-				this.setState({sureLayerFadeIn: false, bounceValue2: new Animated.Value(1)}); 
+				this.setState({sureLayerFadeIn: false, bounceValue2: new Animated.Value(1), scrollEnabled: true}); 
 			}, 3000);
 
 			this.setTimeout(()=>{
@@ -185,7 +188,7 @@ class Detail extends Component{
 			this.setState({sureLayerFadeIn: true, message: '请求错误！'}); 
 			//Alert.alert('ts', res.result.message);
 			this.setTimeout(()=>{
-				this.setState({sureLayerFadeIn: false, bounceValue2: new Animated.Value(1)}); 
+				this.setState({sureLayerFadeIn: false, bounceValue2: new Animated.Value(1), scrollEnabled: true}); 
 			}, 3000);
 
 			this.setTimeout(()=>{
@@ -200,7 +203,8 @@ class Detail extends Component{
 	}
 
 	_overLayerHidden(){
-		this.state.bounceValue.setValue(-wHeight)
+		this.state.bounceValue.setValue(-wHeight);
+		this.setState({scrollEnabled: true}); 
 	}
 
 	_measureWelcome(rName) {

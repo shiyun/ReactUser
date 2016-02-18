@@ -16,6 +16,7 @@ import BaseModules, {
 	Login,
 	Detail,
 	Home,
+	TestComp,
 } from './src/utils/BaseModules';
 
 import Storage from 'react-native-storage';
@@ -43,7 +44,7 @@ class PointsMall extends Component {
 	}
 
 	render(){
-        let initialRoute = {initProps: {}, moduleName: 'Home', switchWay: 'no', component: Home};		
+        let initialRoute = {initProps: {}, moduleName: 'Login', switchWay: 'no', component: Login};		
 		return (
 			<Navigator
                 style = {BaseStyles.container}

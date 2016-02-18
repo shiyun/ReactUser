@@ -8,7 +8,7 @@ import React, {
 const wWidth = Dimensions.get('window').width;
 const wHeight = Dimensions.get('window').height;
 const cStyle = {
-    bColor: 'F0F0F0',
+    bColor: '#F0F0F0',
     borderColor: '#ccc',
 	btnColor: '#FF8A01',
 	btnColor2: '#6796e4',
